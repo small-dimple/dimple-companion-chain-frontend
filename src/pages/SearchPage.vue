@@ -30,20 +30,26 @@
       v-model:main-active-index="activeIndex"
       :items="tagList"
   />
+  <div style="padding: 20px">
+    <van-button  block   type="success" @click="doSearchResult" >搜索</van-button>
+
+  </div>
+
 
 </template>
 
 
 <script setup lang="ts">
 import {ref} from 'vue';
+import {useRouter} from "vue-router";
 
+const router = useRouter();
 const originTagList =  [
   {
     text: '浙江',
     children: [
-      {text: '杭州', id: '杭州'},
-      {text: '温州', id: '温州'},
-      {text: '宁波', id: '宁波',},
+      {text: '男', id: '男'},
+      {text: '女', id: '女'},
     ],
   },
   {
@@ -83,17 +89,25 @@ const onCancel = () => {
   tagList.value= originTagList;
 };
 
+const activeIds = ref([]);
+const activeIndex = ref(0);
 const doclose = (tag) => {
   activeIds.value = activeIds.value.filter((item) => item !== tag);
 }
 
-// const show = ref(true);
-// const close = () => {
-//   show.value = false;
-// }
+const doSearchResult = () => {
+  router.push({
+    path: '/user/list',
+    query: {
+    tags: activeIds.value,
+  }
+  })
 
-const activeIds = ref([]);
-const activeIndex = ref(0);
+
+}
+
+
+
 
 </script>
 
