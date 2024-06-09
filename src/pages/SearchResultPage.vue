@@ -7,7 +7,7 @@
       :desc=user.profile
       :title=user.username
       :thumb=user.avatarUrl
-      @click="doShow()"
+      @click=doShow(user.id)
   >
     <template #tags>
       <van-tag plain type="danger" v-for="tag in user.tags" style="margin-right: 8px; margin-top: 8px">{{ tag }}
@@ -78,16 +78,12 @@ onMounted(async () => {
 
 })
 
-
-
-
-
-
-const doShow = () => {
+// 跳转到用户详情页
+const doShow = (id) => {
   router.push({
-    path: '/user/list/showProf',
+    path: '/user/showProf',
     query: {
-      tags: tags,
+      userSearchId: id
     }
   })
 }

@@ -22,12 +22,15 @@
 
 
 
-<script setup lang="ts">
+<script setup >
 
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
+import myAxios from "../plugins/myAxios.ts";
+import {Toast} from "vant";
 
-const route = useRoute()
+const route = useRoute();
+const router = useRouter();
 
 const { editKey, currentValue, editName } = route.query;
 const editUser = ref({
@@ -38,10 +41,22 @@ const editUser = ref({
 
 });
 
-const onSubmit = (values) => {
-  // todo 把 editKey,currentValue,editName 提交到后台
-  console.log('onSubmit', values);
+const onSubmit = async () => {
+
+  const res = await myAxios.post('/user/update',
+      {
+        id:1,
+        [editUser.value.editKey]:editUser.value.currentValue
+      })
+
+  if(res.code === 0 && res.data > 0){
+    Toast.success(`${editUser.value.editName}修改成功`)
+    router.back();
+  }else{
+    Toast.fail(`${editUser.value.editName}修改失败`)
+  }
 };
+
 
 
 </script>
