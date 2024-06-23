@@ -8,13 +8,13 @@ export type UserType = {
     username: string;
     userAccount: string;
     avatarUrl?: string;
-    gender: number;
+    profile?: string;
+    gender:number;
     phone: string;
     email: string;
-    profile?: string;
     userStatus: number;
-    userRole: string;
-    orderNum: string
-    tags: string[];
-    createTime: string;
-}
+    userRole: number;
+    orderNum: string;
+    tags: string;
+    createTime: Date;
+};
